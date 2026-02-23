@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三孚商贸 B端下单 - 商品明细</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0F172A',
+            secondary: '#334155',
+            accent: '#0369A1',
+            accentLight: '#0EA5E9',
+            bgLight: '#F8FAFC',
+            textDark: '#020617',
+            border: '#E2E8F0',
+          },
+          fontFamily: {
+            heading: ['Poppins', 'Noto Sans SC', 'sans-serif'],
+            body: ['Noto Sans SC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px 0;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      background: #F8FAFC;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .status-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .status-bar .time { font-size: 14px; font-weight: 700; }
+    .status-icons { display: flex; gap: 4px; align-items: center; }
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+      opacity: 0.2;
+      z-index: 10;
+    }
+    .content-scroll::-webkit-scrollbar { display: none; }
+    .option-chip {
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      border: 1.5px solid #E2E8F0;
+      background: #fff;
+      color: #64748B;
+    }
+    .option-chip.active {
+      border-color: #0369A1;
+      background: #F0F9FF;
+      color: #0369A1;
+      font-weight: 500;
+    }
+    .option-chip:hover:not(.active) {
+      border-color: #CBD5E1;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #020617;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus {
+      border-color: #0369A1;
+    }
+    .input-field::placeholder {
+      color: #94A3B8;
+    }
+    .eye-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #020617;
+      background: #fff;
+      outline: none;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .eye-input:focus {
+      border-color: #0369A1;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <!-- 顶部状态栏 -->
+    <div class="bg-white flex-shrink-0">
+      <div class="status-bar" style="color: #020617;">
+        <span class="time">9:41</span>
+        <div class="status-icons">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="#020617"><rect x="0" y="6" width="3" height="6" rx="0.5"/><rect x="4.5" y="4" width="3" height="8" rx="0.5"/><rect x="9" y="2" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="12" rx="0.5" opacity="0.3"/></svg>
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="#020617"><path d="M7.5 3.6C9.5 3.6 11.3 4.4 12.6 5.7L14.1 4.2C12.4 2.5 10.1 1.5 7.5 1.5S2.6 2.5 0.9 4.2L2.4 5.7C3.7 4.4 5.5 3.6 7.5 3.6Z"/><path d="M7.5 7.2C8.8 7.2 10 7.7 10.8 8.6L12.3 7.1C11.1 5.9 9.4 5.1 7.5 5.1S3.9 5.9 2.7 7.1L4.2 8.6C5 7.7 6.2 7.2 7.5 7.2Z"/><circle cx="7.5" cy="10.5" r="1.5"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="#020617"><rect x="0" y="1" width="22" height="10" rx="2" stroke="#020617" stroke-width="1" fill="none"/><rect x="22.5" y="4" width="2" height="4" rx="0.5"/><rect x="1.5" y="2.5" width="16" height="7" rx="1" fill="#020617"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <div class="bg-white px-4 py-3 flex items-center gap-3 border-b border-gray-100 flex-shrink-0">
+      <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+      </div>
+      <div class="flex-1">
+        <h1 class="text-base font-semibold text-textDark">星趣控</h1>
+        <p class="text-[11px] text-gray-400">依视路 · 近视管理镜片</p>
+      </div>
+      <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer">
+        <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+      </div>
+    </div>
+
+    <!-- 可滚动内容区 -->
+    <div class="flex-1 overflow-y-auto content-scroll pb-24">
+
+      <!-- 产品图片区 -->
+      <div class="px-4 pt-4 pb-3">
+        <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 flex items-center justify-center">
+          <div class="w-32 h-20 rounded-xl bg-white/60 backdrop-blur flex items-center justify-center shadow-sm">
+            <svg class="w-16 h-16 text-accent/40" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- 折射率选择 -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1 h-4 bg-accent rounded-full"></div>
+          <span class="text-sm font-semibold text-textDark">折射率</span>
+          <span class="text-[11px] text-red-500">*必选</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2">
+          <div class="option-chip">1.56</div>
+          <div class="option-chip active">1.60</div>
+          <div class="option-chip">1.67</div>
+          <div class="option-chip">1.74</div>
+        </div>
+        <p class="text-[10px] text-gray-400 mt-2 pl-1">提示：折射率越高，镜片越薄</p>
+      </div>
+
+      <!-- 膜层选择 -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1 h-4 bg-accent rounded-full"></div>
+          <span class="text-sm font-semibold text-textDark">膜层</span>
+          <span class="text-[11px] text-red-500">*必选</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="option-chip">钻晶膜洁</div>
+          <div class="option-chip active">钻晶膜御</div>
+          <div class="option-chip">钻晶A4</div>
+          <div class="option-chip">钻晶膜致</div>
+        </div>
+      </div>
+
+      <!-- 处方信息 -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1 h-4 bg-accent rounded-full"></div>
+          <span class="text-sm font-semibold text-textDark">处方信息</span>
+          <span class="text-[11px] text-red-500">*必填</span>
+        </div>
+
+        <!-- 处方表格 -->
+        <div class="bg-white rounded-xl border border-gray-100 overflow-hidden">
+          <!-- 表头 -->
+          <div class="grid grid-cols-4 bg-gray-50 border-b border-gray-100">
+            <div class="p-2.5 text-center text-[11px] text-gray-500 font-medium"></div>
+            <div class="p-2.5 text-center text-[11px] text-gray-500 font-medium">球镜(SPH)</div>
+            <div class="p-2.5 text-center text-[11px] text-gray-500 font-medium">柱镜(CYL)</div>
+            <div class="p-2.5 text-center text-[11px] text-gray-500 font-medium">轴位(AXIS)</div>
+          </div>
+          <!-- 右眼 -->
+          <div class="grid grid-cols-4 border-b border-gray-100">
+            <div class="p-2.5 flex items-center justify-center">
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">右眼 R</span>
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="-0.00">
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="-0.00">
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="0">
+            </div>
+          </div>
+          <!-- 左眼 -->
+          <div class="grid grid-cols-4">
+            <div class="p-2.5 flex items-center justify-center">
+              <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">左眼 L</span>
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="-0.00">
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="-0.00">
+            </div>
+            <div class="p-2">
+              <input type="text" class="eye-input" placeholder="0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 其他参数 -->
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-1 h-4 bg-gray-300 rounded-full"></div>
+          <span class="text-sm font-semibold text-textDark">其他参数</span>
+          <span class="text-[11px] text-gray-400">选填</span>
+        </div>
+
+        <div class="space-y-3">
+          <!-- 瞳距 & 瞳高 -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-gray-500 mb-1.5 block">瞳距 (PD)</label>
+              <input type="text" class="input-field" placeholder="例：62mm">
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-500 mb-1.5 block">瞳高 (PH)</label>
+              <input type="text" class="input-field" placeholder="例：28mm">
+            </div>
+          </div>
+
+          <!-- ADD & 矫正视力 -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-[11px] text-gray-500 mb-1.5 block">ADD</label>
+              <input type="text" class="input-field" placeholder="例：+2.00">
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-500 mb-1.5 block">矫正视力</label>
+              <input type="text" class="input-field" placeholder="例：1.0">
+            </div>
+          </div>
+
+          <!-- 备注 -->
+          <div>
+            <label class="text-[11px] text-gray-500 mb-1.5 block">备注信息</label>
+            <textarea class="input-field resize-none" rows="2" placeholder="请输入其他需要说明的信息..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 价格提示 -->
+      <div class="px-4 py-3">
+        <div class="bg-amber-50 rounded-xl p-3 flex items-start gap-2">
+          <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+          <p class="text-[11px] text-amber-700 leading-relaxed">产品价格根据选择的折射率和膜层组合确定，加入购物车后可查看详细报价。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-4 py-3 pb-8 flex items-center gap-3">
+      <!-- 客服 -->
+      <div class="flex flex-col items-center gap-0.5 cursor-pointer">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+        <span class="text-[10px] text-gray-400">客服</span>
+      </div>
+
+      <!-- 购物车 -->
+      <div class="flex flex-col items-center gap-0.5 cursor-pointer relative">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+        <span class="text-[10px] text-gray-400">购物车</span>
+        <div class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[9px] text-white flex items-center justify-center font-medium">3</div>
+      </div>
+
+      <!-- 加入购物车 -->
+      <button class="flex-1 py-3 rounded-xl bg-accent/10 text-accent text-sm font-medium">
+        加入购物车
+      </button>
+
+      <!-- 立即下单 -->
+      <button class="flex-1 py-3 rounded-xl bg-accent text-white text-sm font-medium shadow-lg shadow-accent/25">
+        立即下单
+      </button>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="home-indicator"></div>
+  </div>
+</body>
+</html>

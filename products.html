@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>三孚商贸 B端下单 - 产品分类</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0F172A',
+            secondary: '#334155',
+            accent: '#0369A1',
+            accentLight: '#0EA5E9',
+            bgLight: '#F8FAFC',
+            textDark: '#020617',
+            border: '#E2E8F0',
+          },
+          fontFamily: {
+            heading: ['Poppins', 'Noto Sans SC', 'sans-serif'],
+            body: ['Noto Sans SC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px 0;
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      background: #F8FAFC;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .status-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .status-bar .time { font-size: 14px; font-weight: 700; }
+    .status-icons { display: flex; gap: 4px; align-items: center; }
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 100px;
+      opacity: 0.2;
+      z-index: 10;
+    }
+    .tab-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: #fff;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-around;
+      padding-top: 8px;
+      z-index: 5;
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    .tab-item .label { font-size: 10px; color: #94A3B8; }
+    .tab-item.active .label { color: #0369A1; }
+    .tab-item.active svg { color: #0369A1; }
+    .badge {
+      position: absolute;
+      top: -2px;
+      right: -6px;
+      width: 14px;
+      height: 14px;
+      background: #EF4444;
+      border-radius: 50%;
+      font-size: 8px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .category-item {
+      padding: 16px 8px;
+      text-align: center;
+      font-size: 12px;
+      color: #94A3B8;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      line-height: 1.4;
+      border-right: 2px solid transparent;
+    }
+    .category-item:hover {
+      color: #64748B;
+      background: #F8FAFC;
+    }
+    .category-item.active {
+      color: #0369A1;
+      font-weight: 600;
+      background: #F0F9FF;
+      border-right-color: #0369A1;
+    }
+    .filter-chip {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .filter-chip.active {
+      background: #0369A1;
+      color: #fff;
+    }
+    .filter-chip:not(.active) {
+      background: #fff;
+      color: #64748B;
+      border: 1px solid #E2E8F0;
+    }
+    .brand-chip {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .brand-chip.active {
+      background: #0369A1;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(3, 105, 161, 0.25);
+    }
+    .brand-chip:not(.active) {
+      background: #fff;
+      color: #64748B;
+      border: 1px solid #E2E8F0;
+    }
+    .brand-chip:not(.active):hover {
+      border-color: #0369A1;
+      color: #0369A1;
+    }
+    .series-chip {
+      flex-shrink: 0;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .series-chip.active {
+      background: #0EA5E9;
+      color: #fff;
+    }
+    .series-chip:not(.active) {
+      background: #F1F5F9;
+      color: #64748B;
+    }
+    .content-scroll::-webkit-scrollbar { display: none; }
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <!-- 顶部导航栏 -->
+    <div class="bg-white flex-shrink-0">
+      <!-- 状态栏 -->
+      <div class="status-bar" style="color: #020617;">
+        <span class="time">9:41</span>
+        <div class="status-icons">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="#020617"><rect x="0" y="6" width="3" height="6" rx="0.5"/><rect x="4.5" y="4" width="3" height="8" rx="0.5"/><rect x="9" y="2" width="3" height="10" rx="0.5"/><rect x="13.5" y="0" width="3" height="12" rx="0.5" opacity="0.3"/></svg>
+          <svg width="15" height="12" viewBox="0 0 15 12" fill="#020617"><path d="M7.5 3.6C9.5 3.6 11.3 4.4 12.6 5.7L14.1 4.2C12.4 2.5 10.1 1.5 7.5 1.5S2.6 2.5 0.9 4.2L2.4 5.7C3.7 4.4 5.5 3.6 7.5 3.6Z"/><path d="M7.5 7.2C8.8 7.2 10 7.7 10.8 8.6L12.3 7.1C11.1 5.9 9.4 5.1 7.5 5.1S3.9 5.9 2.7 7.1L4.2 8.6C5 7.7 6.2 7.2 7.5 7.2Z"/><circle cx="7.5" cy="10.5" r="1.5"/></svg>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="#020617"><rect x="0" y="1" width="22" height="10" rx="2" stroke="#020617" stroke-width="1" fill="none"/><rect x="22.5" y="4" width="2" height="4" rx="0.5"/><rect x="1.5" y="2.5" width="16" height="7" rx="1" fill="#020617"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 搜索栏 + 筛选按钮 -->
+    <div class="px-4 py-2.5 bg-white flex-shrink-0 border-b border-gray-100">
+      <div class="flex items-center gap-2">
+        <div class="flex-1 flex items-center gap-2 bg-gray-50 rounded-full px-4 py-2.5">
+          <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+          <input type="text" placeholder="搜索产品名称、型号..." class="flex-1 bg-transparent text-xs text-textDark placeholder:text-gray-400 outline-none">
+        </div>
+        <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center flex-shrink-0 cursor-pointer shadow-sm">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容区：左侧分类 + 右侧产品 -->
+    <div class="flex flex-1 overflow-hidden" style="margin-bottom: 65px;">
+
+      <!-- 左侧分类栏 -->
+      <div class="w-[72px] bg-white flex-shrink-0 overflow-y-auto">
+        <div class="category-item active">镜片</div>
+        <div class="category-item">镜架</div>
+        <div class="category-item">隐形<br>美瞳</div>
+        <div class="category-item">成品</div>
+        <div class="category-item">物料<br>加工</div>
+      </div>
+
+      <!-- 右侧内容区 -->
+      <div class="flex-1 overflow-y-auto content-scroll bg-bgLight">
+
+        <!-- 品牌快速选择 -->
+        <div class="sticky top-0 bg-bgLight z-10 px-3 pt-3 pb-2 border-b border-gray-100/50">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1" style="-webkit-overflow-scrolling: touch;">
+            <div class="brand-chip">全部</div>
+            <div class="brand-chip active">依视路</div>
+            <div class="brand-chip">优立</div>
+            <div class="brand-chip">奥天</div>
+            <div class="brand-chip">欧几里德</div>
+            <div class="brand-chip">近明达</div>
+          </div>
+        </div>
+
+        <!-- 已选品牌：依视路 - 系列标题 -->
+        <div class="px-3 pt-3 pb-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-1 h-4 bg-accent rounded-full"></div>
+              <span class="text-textDark text-sm font-semibold">依视路</span>
+              <span class="text-gray-400 text-xs">产品系列</span>
+            </div>
+            <span class="text-[10px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">共 4 个系列</span>
+          </div>
+        </div>
+
+        <!-- 产品列表 - 横栏布局 -->
+        <div class="px-3 pb-4 space-y-3">
+
+          <!-- 产品横栏 1: 星趣控 -->
+          <div class="bg-white rounded-2xl flex items-center p-3.5 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden" style="background: linear-gradient(145deg, #e8f4fc, #d1e9f6);">
+              <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div class="flex-1 ml-3.5">
+              <p class="text-textDark text-sm font-semibold">星趣控</p>
+              <p class="text-gray-400 text-[11px] mt-1">近视管理 · 离焦设计</p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <span class="text-[10px] text-accent bg-accent/10 px-2 py-0.5 rounded-full">热门</span>
+              <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </div>
+          </div>
+
+          <!-- 产品横栏 2: 爱赞全晰 -->
+          <div class="bg-white rounded-2xl flex items-center p-3.5 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden" style="background: linear-gradient(145deg, #f3e8fc, #e8d5f8);">
+              <svg class="w-7 h-7 text-purple-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            </div>
+            <div class="flex-1 ml-3.5">
+              <p class="text-textDark text-sm font-semibold">爱赞全晰</p>
+              <p class="text-gray-400 text-[11px] mt-1">单光镜片 · 清晰视野</p>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          </div>
+
+          <!-- 产品横栏 3: 万里路 -->
+          <div class="bg-white rounded-2xl flex items-center p-3.5 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden" style="background: linear-gradient(145deg, #e8f8f0, #d1f0e0);">
+              <svg class="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg>
+            </div>
+            <div class="flex-1 ml-3.5">
+              <p class="text-textDark text-sm font-semibold">万里路</p>
+              <p class="text-gray-400 text-[11px] mt-1">渐进多焦点 · 舒适过渡</p>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          </div>
+
+          <!-- 产品横栏 4: 全视线 -->
+          <div class="bg-white rounded-2xl flex items-center p-3.5 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+            <div class="w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center overflow-hidden" style="background: linear-gradient(145deg, #fcf4e8, #f8e8d1);">
+              <svg class="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+            </div>
+            <div class="flex-1 ml-3.5">
+              <p class="text-textDark text-sm font-semibold">全视线</p>
+              <p class="text-gray-400 text-[11px] mt-1">智能变色 · 自动调节</p>
+            </div>
+            <svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          </div>
+
+          <!-- 底部提示 -->
+          <div class="pt-4 pb-2 flex items-center justify-center">
+            <span class="text-[11px] text-gray-300">— 已展示全部系列 —</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部 Tab Bar -->
+    <div class="tab-bar">
+      <div class="tab-item">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+        <span class="label">首页</span>
+      </div>
+      <div class="tab-item active">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+        <span class="label">分类</span>
+      </div>
+      <div class="tab-item">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+        <span class="label">购物车</span>
+        <div class="badge">3</div>
+      </div>
+      <div class="tab-item">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        <span class="label">我的</span>
+      </div>
+    </div>
+
+    <!-- Home Indicator -->
+    <div class="home-indicator"></div>
+  </div>
+</body>
+</html>

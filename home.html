@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QXYMellon B端下单 - 首页</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0F172A',
+            secondary: '#334155',
+            accent: '#0369A1',
+            accentLight: '#0EA5E9',
+            bgLight: '#F8FAFC',
+            textDark: '#020617',
+            border: '#E2E8F0',
+          },
+          fontFamily: {
+            heading: ['Poppins', 'Noto Sans SC', 'sans-serif'],
+            body: ['Noto Sans SC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    /* Hide scrollbar for horizontal scroll areas */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-gray-200 md:bg-gray-100">
+
+  <!--
+    Responsive Container:
+    - Mobile (<768px): Full width, app-like
+    - Tablet (768px+): Centered, max-w-3xl
+    - Desktop (1024px+): Centered, max-w-5xl with expanded layouts
+  -->
+  <div class="max-w-[480px] md:max-w-3xl lg:max-w-5xl mx-auto bg-bgLight min-h-screen md:shadow-xl md:my-0 relative flex flex-col">
+
+    <!-- ==================== Header ==================== -->
+    <header class="flex-shrink-0" style="background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 50%, #0369A1 100%);">
+      <div class="px-4 md:px-6 lg:px-8 pt-4 md:pt-5 pb-5 md:pb-6">
+        <!-- Welcome + Notification -->
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <p class="text-white/60 text-[10px] md:text-xs">Welcome back</p>
+            <h2 class="text-white text-base md:text-lg font-semibold">
+              张经理
+              <span class="text-white/40 text-xs md:text-sm font-normal ml-1">｜ 鑫盛光学</span>
+            </h2>
+          </div>
+          <a href="#notifications" aria-label="通知" class="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white/20 transition-colors duration-200">
+            <svg class="w-4 h-4 md:w-5 md:h-5 text-white/80" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+          </a>
+        </div>
+        <!-- Search Bar -->
+        <a href="#search" class="flex items-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2.5 md:py-3 border border-white/10 cursor-pointer hover:bg-white/15 transition-colors duration-200">
+          <svg class="w-4 h-4 text-white/40 mr-2.5 flex-shrink-0" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+          <span class="text-white/30 text-xs md:text-sm">搜索产品、色号...</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ==================== Scrollable Content ==================== -->
+    <main class="flex-1 pb-20 md:pb-24">
+
+      <!-- ===== Banner Carousel ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-4">
+        <a href="#banner-detail" class="block rounded-2xl overflow-hidden relative cursor-pointer group h-[140px] md:h-[200px] lg:h-[240px]">
+          <!-- Banner Image -->
+          <img src="../img/sanfu_mini/xqkGen2.png" alt="依视路星趣控2.0镜片" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <!-- Gradient Overlay -->
+          <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(0,60,80,0.75) 0%, rgba(0,60,80,0.45) 50%, transparent 100%);"></div>
+          <!-- Text & CTA -->
+          <div class="absolute inset-0 p-5 md:p-6 lg:p-8 flex flex-col justify-between max-w-[65%]">
+            <div>
+              <p class="text-white/90 text-[10px] md:text-xs lg:text-sm tracking-wider uppercase mb-1">依视路星趣控2.0 新品上线</p>
+            </div>
+            <span class="bg-white text-accent text-xs md:text-sm font-medium px-4 py-1.5 md:py-2 rounded-full w-fit hover:bg-gray-50 transition-colors duration-200">立即查看</span>
+          </div>
+          <!-- Carousel Indicators -->
+          <div class="absolute bottom-3 right-4 flex gap-1.5">
+            <div class="w-4 h-1.5 bg-white rounded-full"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full"></div>
+            <div class="w-1.5 h-1.5 bg-white/40 rounded-full"></div>
+          </div>
+        </a>
+      </div>
+
+      <!-- ===== Quick Actions ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-5">
+        <div class="grid grid-cols-4 md:grid-cols-4 gap-3 md:gap-4">
+          <!-- 全部产品 -->
+          <a href="#products-all" class="flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div class="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-200">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-accent" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+            </div>
+            <span class="text-[10px] md:text-xs text-gray-500">全部产品</span>
+          </a>
+          <!-- 新品推荐 -->
+          <a href="#new-products" class="flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div class="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 transition-colors duration-200">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-orange-500" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
+            </div>
+            <span class="text-[10px] md:text-xs text-gray-500">新品推荐</span>
+          </a>
+          <!-- 订单查询 -->
+          <a href="#orders" class="flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div class="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition-colors duration-200">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-green-500" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
+            </div>
+            <span class="text-[10px] md:text-xs text-gray-500">订单查询</span>
+          </a>
+          <!-- 客服咨询 -->
+          <a href="#customer-service" class="flex flex-col items-center gap-1.5 cursor-pointer group">
+            <div class="w-11 h-11 md:w-14 md:h-14 rounded-2xl bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition-colors duration-200">
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-purple-500" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+            </div>
+            <span class="text-[10px] md:text-xs text-gray-500">客服咨询</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ===== Company Introduction Card ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-5">
+        <div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm">
+          <!-- Company Name Header -->
+          <div class="mb-3">
+            <div class="flex items-center gap-2.5 mb-2">
+              <a href="#company-profile" class="flex-shrink-0 cursor-pointer">
+                <img src="../img/sanfu_mini/sanfuimg.png" alt="三孚商贸" class="w-9 h-9 md:w-11 md:h-11 rounded-lg object-contain">
+              </a>
+              <h3 class="text-textDark text-[13px] md:text-base font-semibold whitespace-nowrap">三晶光学 & 三孚商贸</h3>
+            </div>
+            <div class="flex items-center justify-between pl-[46px] md:pl-[54px]">
+              <p class="text-gray-400 text-[10px] md:text-xs">视光专业镜片服务商</p>
+              <div class="flex items-center gap-1 bg-green-50 px-2 py-0.5 rounded-full">
+                <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                <span class="text-green-600 text-[10px] md:text-xs">依视路授权代理商</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company Description - Responsive: Stack on mobile, side-by-side sections on lg -->
+          <div class="space-y-3 md:space-y-0 md:grid md:grid-cols-3 md:gap-4 mb-3">
+            <!-- About Us -->
+            <div>
+              <div class="flex items-center gap-1.5 mb-1">
+                <div class="w-0.5 h-3 bg-accent rounded-full"></div>
+                <span class="text-textDark text-[11px] md:text-xs font-semibold">关于我们</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-[18px] md:leading-5 pl-3">
+                三晶光学成立于2005年，深耕镜片行业二十年，我们有幸与广东及海南多家医院验光中心及眼镜门店开展合作，并持续提供专业服务支持。三孚商贸2016年取得依视路经销授权，并与优立、奥天等依视路集团成员企业以及中外各大知名镜片眼镜品牌长期合作。我们将继续诚挚为合作门店提供从产品配置、销售培训到售后支持的一站式服务。
+              </p>
+            </div>
+            <!-- Professional Capability -->
+            <div>
+              <div class="flex items-center gap-1.5 mb-1">
+                <div class="w-0.5 h-3 bg-accent rounded-full"></div>
+                <span class="text-textDark text-[11px] md:text-xs font-semibold">专业能力</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-[18px] md:leading-5 pl-3">
+                专注镜片解决方案，品类覆盖高中低全价位段，能够针对各类验光处方提供匹配建议与稳定供货。加工环节采用依视路一流设备标准，确保交付质量与效率。
+              </p>
+            </div>
+            <!-- Service Guarantee -->
+            <div>
+              <div class="flex items-center gap-1.5 mb-1">
+                <div class="w-0.5 h-3 bg-accent rounded-full"></div>
+                <span class="text-textDark text-[11px] md:text-xs font-semibold">服务保障</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-[18px] md:leading-5 pl-3">
+                拥有1000㎡+仓储与充足现片库存，顺丰发货高效稳定；支持定制化需求，快速响应投诉与售后，持续为门店赋能，与客户共同成长。
+              </p>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1.5 md:gap-2 mb-4">
+            <span class="text-[9px] md:text-[10px] text-accent bg-accent/8 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full">20年行业经验</span>
+            <span class="text-[9px] md:text-[10px] text-accent bg-accent/8 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full">依视路授权经销</span>
+            <span class="text-[9px] md:text-[10px] text-accent bg-accent/8 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full">顺丰快速发货</span>
+            <span class="text-[9px] md:text-[10px] text-accent bg-accent/8 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full">定制加工服务</span>
+          </div>
+
+          <!-- Stats - Responsive: 4 cols always, bigger on desktop -->
+          <div class="grid grid-cols-4 gap-2 md:gap-3">
+            <div class="bg-bgLight rounded-xl py-2.5 md:py-3 text-center">
+              <p class="text-accent text-base md:text-lg font-heading font-bold">20</p>
+              <p class="text-gray-400 text-[9px] md:text-[10px] mt-0.5">年经验</p>
+            </div>
+            <div class="bg-bgLight rounded-xl py-2.5 md:py-3 text-center">
+              <p class="text-accent text-base md:text-lg font-heading font-bold">1000+</p>
+              <p class="text-gray-400 text-[9px] md:text-[10px] mt-0.5">㎡仓储</p>
+            </div>
+            <div class="bg-bgLight rounded-xl py-2.5 md:py-3 text-center">
+              <p class="text-accent text-base md:text-lg font-heading font-bold">4</p>
+              <p class="text-gray-400 text-[9px] md:text-[10px] mt-0.5">专业团队</p>
+            </div>
+            <div class="bg-bgLight rounded-xl py-2.5 md:py-3 text-center">
+              <p class="text-accent text-base md:text-lg font-heading font-bold">1000+</p>
+              <p class="text-gray-400 text-[9px] md:text-[10px] mt-0.5">合作客户</p>
+            </div>
+          </div>
+
+          <!-- Teams - 2 cols on mobile, 4 cols on md+ -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-3">
+            <div class="flex items-center gap-2 bg-bgLight rounded-lg px-3 py-2 md:py-2.5">
+              <div class="w-6 h-6 md:w-7 md:h-7 rounded-md bg-blue-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-accent" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+              </div>
+              <span class="text-gray-600 text-[10px] md:text-xs">销售团队</span>
+            </div>
+            <div class="flex items-center gap-2 bg-bgLight rounded-lg px-3 py-2 md:py-2.5">
+              <div class="w-6 h-6 md:w-7 md:h-7 rounded-md bg-orange-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-orange-500" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+              </div>
+              <span class="text-gray-600 text-[10px] md:text-xs">培训团队</span>
+            </div>
+            <div class="flex items-center gap-2 bg-bgLight rounded-lg px-3 py-2 md:py-2.5">
+              <div class="w-6 h-6 md:w-7 md:h-7 rounded-md bg-green-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-green-500" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+              </div>
+              <span class="text-gray-600 text-[10px] md:text-xs">客服团队</span>
+            </div>
+            <div class="flex items-center gap-2 bg-bgLight rounded-lg px-3 py-2 md:py-2.5">
+              <div class="w-6 h-6 md:w-7 md:h-7 rounded-md bg-purple-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-500" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.1-5.1a2.25 2.25 0 010-3.18l.71-.71a2.25 2.25 0 013.18 0l1.79 1.79 1.79-1.79a2.25 2.25 0 013.18 0l.71.71a2.25 2.25 0 010 3.18l-5.1 5.1a1.5 1.5 0 01-2.12 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0115 0"/></svg>
+              </div>
+              <span class="text-gray-600 text-[10px] md:text-xs">加工服务团队</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Brand Introduction ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-5">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-textDark text-sm md:text-base font-semibold">品牌介绍</h3>
+          <a href="#brands" class="text-gray-400 text-[10px] md:text-xs flex items-center gap-0.5 cursor-pointer hover:text-accent transition-colors duration-200">
+            查看更多
+            <svg class="w-3 h-3 md:w-4 md:h-4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          </a>
+        </div>
+        <!--
+          Brand Cards: Drag-to-scroll carousel — all breakpoints.
+          Card widths adapt so the next card always peeks:
+            mobile  (<640px)  : 280px  → ~1.5 cards visible in a 480px container
+            sm      (≥640px)  : 300px  → ~2.0 cards visible
+            md      (≥768px)  : 320px  → ~2.2 cards visible in 768px container
+            lg      (≥1024px) : 340px  → ~2.7 cards visible in 1024px container
+        -->
+        <div
+          id="brandScroll"
+          class="flex gap-3 overflow-x-auto pb-3 hide-scrollbar snap-x snap-mandatory select-none"
+          style="-webkit-overflow-scrolling: touch; cursor: grab;"
+        >
+
+          <!-- Essilor Brand Card -->
+          <a href="#brand-essilor" class="bg-white rounded-2xl overflow-hidden shadow-sm flex-shrink-0 snap-start w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="relative h-[110px] md:h-[130px] lg:h-[150px] overflow-hidden">
+              <img src="../img/sanfu_mini/essilor_img.png" alt="Essilor 依视路" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="p-3.5 md:p-4">
+              <div class="flex items-center gap-1.5 mb-2">
+                <span class="text-[8px] md:text-[10px] text-white bg-accent px-1.5 py-0.5 rounded-full font-medium">法国品牌</span>
+                <span class="text-[8px] md:text-[10px] text-accent bg-accent/10 px-1.5 py-0.5 rounded-full">全球第一</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-4 md:leading-5">
+                依视路创立于1849年法国巴黎，是全球最大的眼镜镜片制造商。旗下拥有万里路（Varilux）渐进片、钻晶（Crizal）镀膜系列，以及全视线（Transitions）变色镜片。采用先进的波前技术和数码精雕工艺，提供卓越的视觉清晰度和佩戴舒适度。
+              </p>
+              <div class="flex items-center gap-1.5 mt-2.5">
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">渐进片</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">防蓝光</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">变色片</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">钻晶膜</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Euclid Brand Card -->
+          <a href="#brand-euclid" class="bg-white rounded-2xl overflow-hidden shadow-sm flex-shrink-0 snap-start w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="relative h-[110px] md:h-[130px] lg:h-[150px] overflow-hidden">
+              <img src="../img/sanfu_mini/euclidxxl.png" alt="Euclid 欧几里德" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="p-3.5 md:p-4">
+              <div class="flex items-center gap-1.5 mb-2">
+                <span class="text-[8px] md:text-[10px] text-white bg-green-600 px-1.5 py-0.5 rounded-full font-medium">美国品牌</span>
+                <span class="text-[8px] md:text-[10px] text-green-600 bg-green-50 px-1.5 py-0.5 rounded-full">专业近视防控</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-4 md:leading-5">
+                欧几里德是美国知名品牌，专注于近视控制与矫正领域。新推出的旋星力近视管理镜片，搭载B.E.S.T双眼视双螺旋专利，以左右反向螺旋离焦链实现双眼互补融像，兼顾强效控轴与高清舒适。临床验证6个月眼轴增长延缓率72.9%，适配青少年全场景佩戴，安全耐用、初戴易适应。
+              </p>
+              <div class="flex items-center gap-1.5 mt-2.5">
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">佩戴舒适</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">近视防控</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">低退回率</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Jinmingda Brand Card -->
+          <a href="#brand-jinmingda" class="bg-white rounded-2xl overflow-hidden shadow-sm flex-shrink-0 snap-start w-[280px] sm:w-[300px] md:w-[320px] lg:w-[340px] cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="relative h-[110px] md:h-[130px] lg:h-[150px] overflow-hidden" style="background: linear-gradient(135deg, #3D1F56 0%, #6B3FA0 60%, #9B6DD7 100%);">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                  <p class="text-white/40 text-[9px] md:text-[10px] tracking-[3px] uppercase mb-1">Progressive Lens</p>
+                  <h3 class="text-white text-lg md:text-xl font-heading font-bold tracking-wide">近明达</h3>
+                  <p class="text-white/50 text-[9px] md:text-[10px] mt-0.5">渐进多焦点镜片专家</p>
+                </div>
+              </div>
+              <div class="absolute top-3 right-6 w-14 h-14 rounded-full" style="background: radial-gradient(circle, rgba(155,109,215,0.3), transparent);"></div>
+              <div class="absolute bottom-1 left-4 w-10 h-10 rounded-full" style="background: radial-gradient(circle, rgba(107,63,160,0.25), transparent);"></div>
+            </div>
+            <div class="p-3.5 md:p-4">
+              <div class="flex items-center gap-1.5 mb-2">
+                <span class="text-[8px] md:text-[10px] text-white bg-purple-600 px-1.5 py-0.5 rounded-full font-medium">渐进片</span>
+                <span class="text-[8px] md:text-[10px] text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded-full">多焦点</span>
+              </div>
+              <p class="text-gray-500 text-[11px] md:text-xs leading-4 md:leading-5">
+                近明达专注于渐进多焦点镜片研发与制造，是国内领先的渐进片品牌。镜片采用自由曲面设计技术，实现远、中、近三段视力的自然过渡，有效减少像差和晃动感。适合老花眼及多种屈光需求人群，提供个性化定制方案，佩戴舒适、适应快。
+              </p>
+              <div class="flex items-center gap-1.5 mt-2.5">
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">自由曲面</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">个性定制</span>
+                <span class="text-[8px] md:text-[10px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">抗疲劳</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+        <!-- Carousel indicator dots — tracks active card across all breakpoints -->
+        <div id="brandDots" class="flex items-center justify-center gap-1.5 mt-2.5">
+          <div class="brand-dot h-1 rounded-full transition-all duration-300 bg-accent w-4"></div>
+          <div class="brand-dot h-1 rounded-full transition-all duration-300 bg-gray-200 w-1.5"></div>
+          <div class="brand-dot h-1 rounded-full transition-all duration-300 bg-gray-200 w-1.5"></div>
+        </div>
+      </div>
+
+      <!-- ===== Why Choose Us ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-5">
+        <h3 class="text-textDark text-sm md:text-base font-semibold mb-3">为什么选择我们</h3>
+        <!-- 2 cols mobile, 3 cols md+, 3 cols lg+ -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          <!-- Advantage 1 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-accent" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">官方授权</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">依视路授权支持 门店正规背书</p>
+          </div>
+          <!-- Advantage 2 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-rose-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-rose-500" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">客户优先</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">先解决问题 再优化流程</p>
+          </div>
+          <!-- Advantage 3 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-purple-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-purple-500" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">高效协同</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">内部对齐快 减少来回讯问</p>
+          </div>
+          <!-- Advantage 4 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-orange-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-orange-500" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">培训赋能</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">提升门店业务实力 与客户共成长</p>
+          </div>
+          <!-- Advantage 5 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-green-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-green-500" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">足量库存</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">充足现片库存 高效稳定配送</p>
+          </div>
+          <!-- Advantage 6 -->
+          <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-purple-50 flex items-center justify-center mb-2.5">
+              <svg class="w-4 h-4 md:w-5 md:h-5 text-purple-500" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/></svg>
+            </div>
+            <h4 class="text-textDark text-xs md:text-sm font-semibold mb-1">完善售后</h4>
+            <p class="text-gray-400 text-[10px] md:text-xs leading-4 md:leading-5">快速响应投诉 积极处理问题</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Hot Products ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pt-5 pb-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-textDark text-sm md:text-base font-semibold">热销产品</h3>
+          <a href="#all-products" class="text-gray-400 text-[10px] md:text-xs flex items-center gap-0.5 cursor-pointer hover:text-accent transition-colors duration-200">
+            查看全部
+            <svg class="w-3 h-3 md:w-4 md:h-4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          </a>
+        </div>
+        <!-- Product Cards: Horizontal scroll on mobile, grid on md+ -->
+        <div class="flex md:grid md:grid-cols-3 gap-3 md:gap-4 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 hide-scrollbar" style="-webkit-overflow-scrolling: touch;">
+          <!-- Product 1 -->
+          <a href="#product-1" class="bg-white rounded-2xl shadow-sm flex-shrink-0 w-[140px] md:w-auto cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="rounded-t-2xl overflow-hidden h-[120px] md:h-[160px] lg:h-[180px]" style="background: linear-gradient(135deg, #f0f4f8, #e2e8f0);">
+              <div class="w-full h-full flex items-center justify-center">
+                <!-- TODO: Replace with actual product image -->
+                <img src="" alt="HONEY ALMOND 产品图" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover hidden" data-src="">
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full" style="background: radial-gradient(circle at 30% 30%, #8B7355, #654321); box-shadow: inset 0 0 15px rgba(0,0,0,0.2);"></div>
+              </div>
+            </div>
+            <div class="p-3 md:p-4">
+              <p class="text-textDark text-xs md:text-sm font-medium truncate">HONEY ALMOND</p>
+              <p class="text-gray-400 text-[10px] md:text-xs mt-0.5">日抛 · 6片装</p>
+              <div class="flex items-center justify-between mt-2">
+                <span class="text-accent text-xs md:text-sm font-heading font-bold">¥ 询价</span>
+                <button onclick="event.preventDefault(); window.location.href='#add-to-cart-1'" aria-label="加入购物车" class="w-6 h-6 md:w-7 md:h-7 rounded-full bg-accent/10 flex items-center justify-center cursor-pointer hover:bg-accent/20 transition-colors duration-200">
+                  <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-accent" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </button>
+              </div>
+            </div>
+          </a>
+          <!-- Product 2 -->
+          <a href="#product-2" class="bg-white rounded-2xl shadow-sm flex-shrink-0 w-[140px] md:w-auto cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="rounded-t-2xl overflow-hidden h-[120px] md:h-[160px] lg:h-[180px]" style="background: linear-gradient(135deg, #f0f4f8, #e2e8f0);">
+              <div class="w-full h-full flex items-center justify-center">
+                <img src="" alt="FAIRY PISTACHIO 产品图" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover hidden" data-src="">
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full" style="background: radial-gradient(circle at 30% 30%, #5B8C5A, #2D5A27); box-shadow: inset 0 0 15px rgba(0,0,0,0.2);"></div>
+              </div>
+            </div>
+            <div class="p-3 md:p-4">
+              <p class="text-textDark text-xs md:text-sm font-medium truncate">FAIRY PISTACHIO</p>
+              <p class="text-gray-400 text-[10px] md:text-xs mt-0.5">月抛 · 1片装</p>
+              <div class="flex items-center justify-between mt-2">
+                <span class="text-accent text-xs md:text-sm font-heading font-bold">¥ 询价</span>
+                <button onclick="event.preventDefault(); window.location.href='#add-to-cart-2'" aria-label="加入购物车" class="w-6 h-6 md:w-7 md:h-7 rounded-full bg-accent/10 flex items-center justify-center cursor-pointer hover:bg-accent/20 transition-colors duration-200">
+                  <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-accent" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </button>
+              </div>
+            </div>
+          </a>
+          <!-- Product 3 -->
+          <a href="#product-3" class="bg-white rounded-2xl shadow-sm flex-shrink-0 w-[140px] md:w-auto cursor-pointer group hover:shadow-md transition-shadow duration-200">
+            <div class="rounded-t-2xl overflow-hidden h-[120px] md:h-[160px] lg:h-[180px]" style="background: linear-gradient(135deg, #f0f4f8, #e2e8f0);">
+              <div class="w-full h-full flex items-center justify-center">
+                <img src="" alt="MOONLIGHT BLUE 产品图" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover hidden" data-src="">
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full" style="background: radial-gradient(circle at 30% 30%, #4A6B8A, #1a3a5c); box-shadow: inset 0 0 15px rgba(0,0,0,0.2);"></div>
+              </div>
+            </div>
+            <div class="p-3 md:p-4">
+              <p class="text-textDark text-xs md:text-sm font-medium truncate">MOONLIGHT BLUE</p>
+              <p class="text-gray-400 text-[10px] md:text-xs mt-0.5">半年抛 · 1片装</p>
+              <div class="flex items-center justify-between mt-2">
+                <span class="text-accent text-xs md:text-sm font-heading font-bold">¥ 询价</span>
+                <button onclick="event.preventDefault(); window.location.href='#add-to-cart-3'" aria-label="加入购物车" class="w-6 h-6 md:w-7 md:h-7 rounded-full bg-accent/10 flex items-center justify-center cursor-pointer hover:bg-accent/20 transition-colors duration-200">
+                  <svg class="w-3 h-3 md:w-3.5 md:h-3.5 text-accent" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                </button>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ===== Contact Info ===== -->
+      <div class="px-4 md:px-6 lg:px-8 pb-6">
+        <div class="bg-white rounded-2xl p-4 md:p-5 shadow-sm">
+          <h4 class="text-textDark text-xs md:text-sm font-semibold mb-3">联系我们</h4>
+          <!-- Phone & WeChat: stack on mobile, side-by-side on md+ -->
+          <div class="space-y-3 md:space-y-0 md:flex md:gap-6">
+            <!-- Phone -->
+            <a href="tel:02081810228" class="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity duration-200">
+              <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 md:w-4.5 md:h-4.5 text-accent" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+              </div>
+              <div>
+                <p class="text-textDark text-[11px] md:text-xs font-medium">(020) 81810228</p>
+                <p class="text-gray-400 text-[9px] md:text-[10px] mt-0.5">周一至周日 9:00-18:00</p>
+              </div>
+            </a>
+            <!-- WeChat -->
+            <div class="flex items-start gap-2.5 md:flex-1">
+              <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-green-50 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 md:w-4.5 md:h-4.5 text-green-500" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18z"/></svg>
+              </div>
+              <div class="flex-1">
+                <p class="text-textDark text-[11px] md:text-xs font-medium mb-1.5">客服微信</p>
+                <div class="grid grid-cols-3 gap-2">
+                  <p class="text-[9px] md:text-[10px] text-gray-400">客服1:<span class="font-bold text-textDark"> GZSF-1111</span></p>
+                  <p class="text-[9px] md:text-[10px] text-gray-400">客服2:<span class="font-bold text-textDark"> sanfu222</span></p>
+                  <p class="text-[9px] md:text-[10px] text-gray-400">客服3:<span class="font-bold text-textDark"> GZSF3333</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ==================== Bottom Tab Bar ==================== -->
+   
+    <nav class="sticky bottom-0 bg-white border-t border-gray-200 flex-shrink-0 z-50">
+      <div class="flex items-start justify-around pt-2 pb-3 md:pb-4 md:pt-3">
+        <!-- Home (active) -->
+        <a href="#home" class="flex flex-col items-center gap-0.5 cursor-pointer min-w-[44px] min-h-[44px] justify-center" aria-label="首页" aria-current="page">
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-accent" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"/><path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625A1.875 1.875 0 013.75 19.875v-6.198a2.29 2.29 0 01.091-.086L12 5.432z"/></svg>
+          <span class="text-[10px] md:text-xs text-accent font-medium">首页</span>
+        </a>
+        <!-- Products -->
+        <a href="products.html" class="flex flex-col items-center gap-0.5 cursor-pointer min-w-[44px] min-h-[44px] justify-center hover:opacity-70 transition-opacity duration-200" aria-label="产品">
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+          <span class="text-[10px] md:text-xs text-gray-400">产品</span>
+        </a>
+        <!-- Cart -->
+        <a href="cart.html" class="flex flex-col items-center gap-0.5 cursor-pointer min-w-[44px] min-h-[44px] justify-center relative hover:opacity-70 transition-opacity duration-200" aria-label="购物车">
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg>
+          <span class="text-[10px] md:text-xs text-gray-400">购物车</span>
+          <!-- Cart Badge -->
+          <span class="absolute -top-0.5 right-0.5 md:right-1 w-4 h-4 bg-red-500 rounded-full text-[8px] md:text-[9px] text-white flex items-center justify-center font-semibold">3</span>
+        </a>
+        <!-- Profile -->
+        <a href="profile.html" class="flex flex-col items-center gap-0.5 cursor-pointer min-w-[44px] min-h-[44px] justify-center hover:opacity-70 transition-opacity duration-200" aria-label="我的">
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+          <span class="text-[10px] md:text-xs text-gray-400">我的</span>
+        </a>
+      </div>
+      <!-- Safe area bottom spacing for iOS -->
+      <div class="h-[env(safe-area-inset-bottom)]"></div>
+    </nav>
+
+  </div>
+
+  <script>
+  // ── Brand Cards: mouse drag-to-scroll + live dot indicator ──
+  (function () {
+    var track = document.getElementById('brandScroll');
+    if (!track) return;
+
+    var pressed = false, moved = false, startX = 0, startLeft = 0;
+
+    track.addEventListener('mousedown', function (e) {
+      pressed = true;
+      moved = false;
+      startX = e.clientX;
+      startLeft = track.scrollLeft;
+      track.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!pressed) return;
+      var dx = startX - e.clientX;
+      if (Math.abs(dx) > 4) moved = true;
+      track.scrollLeft = startLeft + dx;
+    });
+
+    window.addEventListener('mouseup', function () {
+      pressed = false;
+      track.style.cursor = 'grab';
+    });
+
+    // Prevent anchor navigation when user was dragging
+    track.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (moved) e.preventDefault();
+      });
+    });
+
+    // Dot indicator: highlight the dot matching the snapped card
+    var dots  = document.querySelectorAll('.brand-dot');
+    var cards = track.querySelectorAll('a');
+
+    function syncDots() {
+      if (!cards.length) return;
+      var gap   = 12; // gap-3 = 12 px
+      var cardW = cards[0].offsetWidth + gap;
+      var idx   = Math.min(Math.round(track.scrollLeft / cardW), cards.length - 1);
+      dots.forEach(function (d, i) {
+        var active = (i === idx);
+        d.classList.toggle('bg-accent',   active);
+        d.classList.toggle('bg-gray-200', !active);
+        d.classList.toggle('w-4',         active);
+        d.classList.toggle('w-1.5',       !active);
+      });
+    }
+
+    track.addEventListener('scroll', syncDots, { passive: true });
+  })();
+  </script>
+
+  <!--
+    ==================== Link Interface Reference ====================
+    All clickable elements use href="#xxx" as placeholders.
+    Replace with actual URLs/routes when integrating:
+
+    NAVIGATION:
+    - #home             → Home page (current)
+    - products.html     → Products list page
+    - cart.html         → Shopping cart page
+    - profile.html      → User profile page
+
+    HEADER:
+    - #notifications    → Notifications center
+    - #search           → Search page/modal
+
+    BANNER:
+    - #banner-detail    → Banner campaign detail page
+    - #banner-link      → Banner CTA destination
+
+    QUICK ACTIONS:
+    - #products-all     → All products page
+    - #new-products     → New arrivals page
+    - #orders           → Order history/tracking
+    - #customer-service → Customer service chat
+
+    BRAND SECTION:
+    - #brands           → All brands page
+    - #brand-essilor    → Essilor brand detail
+    - #brand-euclid     → Euclid brand detail
+    - #brand-jinmingda  → Jinmingda brand detail
+
+    PRODUCT SECTION:
+    - #all-products     → All products page
+    - #product-1        → Product detail (HONEY ALMOND)
+    - #product-2        → Product detail (FAIRY PISTACHIO)
+    - #product-3        → Product detail (MOONLIGHT BLUE)
+    - #add-to-cart-1/2/3 → Add to cart actions
+
+    COMPANY:
+    - #company-profile  → Company detail page
+
+    CONTACT:
+    - tel:02081810228   → Phone call link
+
+    IMAGE PLACEHOLDERS:
+    - Product images use hidden <img> tags with data-src=""
+      attributes ready for real image URLs
+  -->
+
+</body>
+</html>
